@@ -1,36 +1,25 @@
 # service mysql start
+# sleep 2
 
-mysqld_safe
+# mysql -u root < script.sql
+# echo "update mysql.user set plugin='' where user='root'" | mysql -u root -psecretpass
 
-sleep 5
-
-mysql -u root < script.sql
-
-# mysql -u root -p$SQL_ROOT_PASSWORD -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${SQL_ROOT_PASSWORD}';"
-
-# mysql -u root -p$SQL_ROOT_PASSWORD -e "CREATE DATABASE IF NOT EXISTS '${SQL_DATABASE}';"
-
-# mysql -u root -p$SQL_ROOT_PASSWORD -e "GRANT ALL PRIVILEGES ON *.* to 'root'@'localhost' WITH GRANT OPTION;"
-
-# mysql -u root -p$SQL_ROOT_PASSWORD -e "CREATE USER IF NOT EXISTS '${SQL_USER}'@'localhost' IDENTIFIED BY '${SQL_PASSWORD}';"
-# mysql -u root -p$SQL_ROOT_PASSWORD -e "GRANT ALL PRIVILEGES ON '${SQL_DATABASE}'.* TO '${SQL_USER}'@'%' IDENTIFIED BY '${SQL_PASSWORD}';"
-
-# mysql -u root -p$SQL_ROOT_PASSWORD -e "FLUSH PRIVILEGES;"
-
-# mysqladmin -u root -p$SQL_ROOT_PASSWORD shutdown
-
-# exec mysqld_safe
-
-# mysql -e "CREATE DATABASE IF NOT EXISTS Data1;"
-
+# mysql -e "CREATE DATABASE IF NOT EXISTS ${SQL_DATABASE};"
 # mysql -e "GRANT ALL PRIVILEGES ON *.* to 'root'@'localhost' WITH GRANT OPTION;"
+# mysql -e "CREATE USER IF NOT EXISTS '${SQL_USER}'@'%' IDENTIFIED BY '${SQL_PASSWORD}';"
+# mysql -e "GRANT ALL PRIVILEGES ON ${SQL_DATABASE}.* TO '${SQL_USER}'@'%';"
+# mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${SQL_ROOT_PASSWORD}';"
+# mysql -u root -p$SQL_ROOT_PASSWORD -e "FLUSH PRIVILEGES;"
+# mysqladmin -u root -p$SQL_ROOT_PASSWORD shutdown
+# mysqld_safe
 
-# mysql -e "CREATE USER IF NOT EXISTS 'notroot'@'localhost' IDENTIFIED BY 'easypass';"
-# mysql -e "GRANT ALL PRIVILEGES ON Data1.* TO 'notroot'@'%' IDENTIFIED BY 'easypass';"
+echo "CREATE DATABASE IF NOT EXISTS ${SQL_DATABASE};
+GRANT ALL PRIVILEGES ON *.* to 'root'@'localhost' WITH GRANT OPTION;
+CREATE USER IF NOT EXISTS '${SQL_USER}'@'%' IDENTIFIED BY '${SQL_PASSWORD}';
+GRANT ALL PRIVILEGES ON ${SQL_DATABASE}.* TO '${SQL_USER}'@'%';
+FLUSH PRIVILEGES; 
+ALTER USER 'root'@'localhost' IDENTIFIED BY '${SQL_ROOT_PASSWORD}';" > /var/www/script2.sql
 
-# mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'secretpass';"
-# mysql -u root -psecretpass -e "FLUSH PRIVILEGES;"
-
-mysqladmin -u root -psecretpass shutdown
-
-exec mysqld_safe
+# mysql -u root < script2.sql
+# mysqladmin -u root -p$SQL_ROOT_PASSWORD shutdown
+# mysqld_safe

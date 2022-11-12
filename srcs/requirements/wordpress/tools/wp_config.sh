@@ -1,11 +1,11 @@
-sleep 10
+sleep 2
 
 wp config create	--allow-root \
 					--path='/var/www/wordpress' \
 					--dbname=$SQL_DATABASE \
 					--dbuser=$SQL_USER \
 					--dbpass=$SQL_PASSWORD \
-					--dbhost=salut:3306
+					--dbhost=mariadb:3306
 			
 wp core install 	--allow-root \
 					--path='/var/www/wordpress' \
@@ -14,6 +14,7 @@ wp core install 	--allow-root \
 					--admin_user=${WP_ADM_USER}\
 					--admin_password=${WP_ADM_PASS}\
 					--admin_email=${WP_ADM_EMAIL}\
+					--skip-email
 
 wp user create		--allow-root \
 					--path='var/www/wordpress' \

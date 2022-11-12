@@ -1,16 +1,22 @@
-version: "3.9"
+version: "3.8"
 
 services:
     mariadb:
       container_name: mariadb
       networks:
         - inception
-      build:
+      build: 
         context: requirements/mariadb
         dockerfile: Dockerfile
-      env_file: .env
+        args:
+          SQL_DATABASE: ${SQL_DATABASE}
+          SQL_ROOT_PASSWORD: ${SQL_ROOT_PASSWORD}
+          SQL_USER: ${SQL_USER}
+          SQL_PASSWORD: ${SQL_PASSWORD}
+      env_file: 
+        - .env
       volumes:
-        - mariadb:/var/lib/mysql
+        - v_mariadb:/var/lib/mysql
       restart: unless-stopped
       expose:
         - "3306"
@@ -18,7 +24,7 @@ services:
     nginx:
         container_name: nginx
         volumes:
-          - wordpress:/var/www/wordpress
+          - v_wordpress:/var/www/wordpress
         networks:
           - inception
         depends_on:
@@ -35,7 +41,7 @@ services:
       container_name: wordpress
       env_file: .env
       volumes:
-        - wordpress:/var/www/wordpress
+        - v_wordpress:/var/www/wordpress
       networks:
         - inception
       build:
@@ -48,18 +54,18 @@ services:
         - "9000"
 
 volumes:
-  wordpress:
+  v_wordpress:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/ntan/data/wordpress'
-  mariadb:
+      device: '/home/ntan/data/v_wordpress'
+  v_mariadb:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/ntan/data/mariadb'
+      device: '/home/ntan/data/v_mariadb'
   
 networks:
   inception:
