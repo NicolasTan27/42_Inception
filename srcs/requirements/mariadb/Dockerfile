@@ -20,4 +20,4 @@ RUN service mysql start &&\
 	rm -f /var/www/script2.sql &&\
 	rm -f var/www/script.sh
 
-CMD ["mysqld_safe"]
+ENTRYPOINT ["mysqld_safe"]
