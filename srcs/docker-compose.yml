@@ -16,7 +16,7 @@ services:
       env_file: 
         - .env
       volumes:
-        - v_mariadb:/var/lib/mysql
+        - volume_mariadb:/var/lib/mysql
       restart: unless-stopped
       expose:
         - "3306"
@@ -24,7 +24,7 @@ services:
     nginx:
         container_name: nginx
         volumes:
-          - v_wordpress:/var/www/wordpress
+          - volume_wordpress:/var/www/wordpress
         networks:
           - inception
         depends_on:
@@ -41,7 +41,7 @@ services:
       container_name: wordpress
       env_file: .env
       volumes:
-        - v_wordpress:/var/www/wordpress
+        - volume_wordpress:/var/www/wordpress
       networks:
         - inception
       build:
@@ -54,18 +54,18 @@ services:
         - "9000"
 
 volumes:
-  v_wordpress:
+  volume_wordpress:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/ntan/data/v_wordpress'
-  v_mariadb:
+      device: '/home/ntan/data/wordpress'
+  volume_mariadb:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/ntan/data/v_mariadb'
+      device: '/home/ntan/data/mariadb'
   
 networks:
   inception:

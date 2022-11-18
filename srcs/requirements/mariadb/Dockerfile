@@ -5,7 +5,7 @@ RUN apt-get update && apt-get install -y \
 
 COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
-# COPY tools/script.sql	/var/www/
+COPY tools/start.sh		/
 COPY tools/script.sh	/var/www/
 
 ARG SQL_DATABASE
@@ -20,4 +20,4 @@ RUN service mysql start &&\
 	rm -f /var/www/script2.sql &&\
 	rm -f var/www/script.sh
 
-ENTRYPOINT ["mysqld_safe"]
+ENTRYPOINT ["bash", "/start.sh"]

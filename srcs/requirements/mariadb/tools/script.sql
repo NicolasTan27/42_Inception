@@ -1,9 +1,0 @@
-CREATE DATABASE IF NOT EXISTS Data1;
-
-GRANT ALL PRIVILEGES ON *.* to 'root'@'localhost' WITH GRANT OPTION;
-
-CREATE USER IF NOT EXISTS 'notroot'@'%' IDENTIFIED BY 'easypass';
-GRANT ALL PRIVILEGES ON Data1.* TO 'notroot'@'%';
-FLUSH PRIVILEGES;
-
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'secretpass';
