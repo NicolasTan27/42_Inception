@@ -12,8 +12,26 @@ fclean:
 	sudo rm -rf /home/ntan/data/mariadb/*
 	sudo rm -rf /home/ntan/data/wordpress/*
 
+list:
+	docker compose -f ./srcs/docker-compose.yml ps
+
+#NGINX
+volume_ls:
+	docker volume ls
+
+volume_mariadb:
+	docker volume inspect mariadb
+
+volume_wordpress:
+	docker volume inspect wordpress
+
+#MARIADB
 db:
-	docker exec -it mariadb bash
+	docker exec -ti mariadb bash
+
+#SHOW DATABASES;
+#USE <databasename>;
+#SHOW tables;
 
 sub:
 	docker stop $$(docker ps -qa);
