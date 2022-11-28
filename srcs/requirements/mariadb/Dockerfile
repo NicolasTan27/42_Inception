@@ -18,6 +18,6 @@ RUN service mysql start &&\
 	bash /var/www/script.sh &&\
 	mysql < /var/www/script2.sql &&\
 	rm -f /var/www/script2.sql &&\
-	rm -f var/www/script.sh
+	rm -f /var/www/script.sh
 
 ENTRYPOINT ["bash", "/start.sh"]

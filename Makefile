@@ -1,5 +1,5 @@
 all:
-	docker compose -f ./srcs/docker-compose.yml up
+	docker compose -f ./srcs/docker-compose.yml up -d
 
 stop:
 	docker compose -f ./srcs/docker-compose.yml stop
@@ -11,6 +11,9 @@ fclean:
 	docker compose -f ./srcs/docker-compose.yml down -v --rmi all
 	sudo rm -rf /home/ntan/data/mariadb/*
 	sudo rm -rf /home/ntan/data/wordpress/*
+
+db:
+	docker exec -it mariadb bash
 
 sub:
 	docker stop $$(docker ps -qa);
